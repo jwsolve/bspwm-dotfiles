@@ -1,0 +1,86 @@
+# Open Terminal (alacritty)
+super + shift + t
+	kitty
+
+ctrl + shift + Escape
+	xfce4-taskmanager
+
+# Menu aplicaciones
+super + r
+    rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-1.rasi
+
+super + p
+	pulsar
+
+# Power off, Reboot, Log out, Lockscreen, kill an app
+ctrl + super + alt + {p,r,q,l,k}
+	{systemctl poweroff, systemctl reboot,bspc quit,$HOME/.config/bspwm/scripts/lock,xkill}
+
+# Apps
+super + {b,e,t}
+	{firefox, \
+	 thunar, \
+	 claws-mail}
+
+super + shift + e
+	emote
+
+# Change transparency on focused window
+ctrl + alt {minus,plus,t}
+	{picom-trans -c -o +3, picom-trans -c -o -1, picom-trans -c -d}
+
+#
+# bspwm hotkeys
+#
+
+# Reload BSPWM
+super + shift + r
+	bspc wm -r
+
+# close and kill
+super + {_,shift + }q
+	bspc node -{c,k}
+
+# focus the next/previous node in the current desktop
+alt + {_,shift + }Tab
+	bspc node -f {next,prev}.local
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}' --follow
+
+#
+# preselect
+#
+
+# preselect the direction
+super + ctrl + {Left,Down,Up,Right}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# move/resize
+#
+
+# Manage brightness
+XF86MonBrightness{Up,Down}
+    sh Brightness {up,down}
+
+# Volume control
+XF86Audio{RaiseVolume,LowerVolume,Mute}
+	Volume{ --inc, --dec, --toggle}
+
+# Music Control
+XF86Audio{Next,Prev,Play,Stop}
+	MediaControl {--next,--previous,--toggle,--stop}
